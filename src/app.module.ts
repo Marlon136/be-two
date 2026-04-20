@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CarsModule } from './cars/cars.module';
 import { BikesModule } from './bikes/bikes.module';
+import { PilotsModule } from './pilots/pilots.module';
 
 @Module({
   imports: [
@@ -16,14 +17,18 @@ import { BikesModule } from './bikes/bikes.module';
     // Option A — Docker:  MONGODB_URL=mongodb://localhost:27017/nest-cars
     // Option B — Atlas:   MONGODB_URL=mongodb+srv://user:pass@cluster.mongodb.net/nest-cars
     MongooseModule.forRootAsync({
-      useFactory: () => ({
-        uri:
-          process.env.MONGODB_URL || 'mongodb://localhost:27017/nest-cars',
-      }),
-    }),
+      useFactory: () => {
+  console.log('ENV URL:', process.env.MONGODB_URL);
 
+  return {
+    uri:
+      process.env.MONGODB_URL || 'mongodb://localhost:27017/nest-cars',
+  };
+},
+    }),
     CarsModule,
     BikesModule,
+    PilotsModule,
   ],
 })
 export class AppModule {}
