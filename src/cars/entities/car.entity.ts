@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Car extends Document {
-  @Prop({ unique: true, index: true })
+  @Prop({ index: true })
   nombre: string;
 
   @Prop()
